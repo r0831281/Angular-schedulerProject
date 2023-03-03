@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "5E7qOyPXPcM3MUugzoDQTH4TpEvXiPYxNFG2j3VNmTY=",
+  "Source": "StaffSchedulerApi",
+  "BasePath": "_content/StaffSchedulerApi",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
