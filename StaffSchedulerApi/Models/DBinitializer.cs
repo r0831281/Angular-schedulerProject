@@ -22,11 +22,7 @@ namespace StaffSchedulerApi.Models
                     return;   // DB has been seeded
                 }
 
-                Role adminRole = new Role()
-                {
-                    role = "admin"
-                };
-                context.roles.Add(adminRole);
+
                 context.SaveChanges();
             }
         }
