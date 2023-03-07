@@ -47,7 +47,7 @@ namespace StaffSchedulerApi.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutRole(int id, Role role)
         {
-            if (id != role.id)
+            if (id != role.Id)
             {
                 return BadRequest();
             }
@@ -81,7 +81,7 @@ namespace StaffSchedulerApi.Controllers
             _context.roles.Add(role);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetRole", new { id = role.id }, role);
+            return CreatedAtAction("GetRole", new { id = role.Id }, role);
         }
 
         // DELETE: api/Roles/5
@@ -102,7 +102,7 @@ namespace StaffSchedulerApi.Controllers
 
         private bool RoleExists(int id)
         {
-            return _context.roles.Any(e => e.id == id);
+            return _context.roles.Any(e => e.Id == id);
         }
     }
 }

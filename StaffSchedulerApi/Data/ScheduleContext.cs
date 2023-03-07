@@ -24,6 +24,9 @@ namespace StaffSchedulerApi.Data
             modelBuilder.Entity<AvailableDate>().ToTable("availableDates");
             modelBuilder.Entity<RequestedDate>().ToTable("requestedDates");
             modelBuilder.Entity<PlannedDate>().ToTable("plannedDates");
+
+            modelBuilder.Entity<User>().Property(u => u.RoleId).HasDefaultValue(1);
+
         }
     }
 }

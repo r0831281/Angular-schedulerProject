@@ -25,14 +25,14 @@ namespace StaffSchedulerApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<User>>> Getusers()
         {
-            return await _context.users.ToListAsync();
+            return await _context.users.Include(u => u.Role).ToListAsync();
         }
 
         // GET: api/Users/5
         [HttpGet("{id}")]
         public async Task<ActionResult<User>> GetUser(int id)
         {
-            var user = await _context.users.FindAsync(id);
+            var user = await _context.users.Include(u => u.Role).FirstOrDefaultAsync(u => u.Id == id);
 
             if (user == null)
             {

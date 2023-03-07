@@ -2,7 +2,7 @@
 {
     public class AvailableDate
     {
-        public int id { get; set; }
+        public int Id { get; set; }
 
         public DateTime DateTimeStart { get; set; }
         public DateTime? EndTime { get; set; }
