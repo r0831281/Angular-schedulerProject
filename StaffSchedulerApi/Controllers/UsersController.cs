@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using StaffSchedulerApi.Data;
 using StaffSchedulerApi.Models;
+using StaffSchedulerApi.Services;
 
 namespace StaffSchedulerApi.Controllers
 {
@@ -15,13 +17,24 @@ namespace StaffSchedulerApi.Controllers
     public class UsersController : ControllerBase
     {
         private readonly ScheduleContext _context;
-
+        private IUserService _userservice;
         public UsersController(ScheduleContext context)
         {
             _context = context;
         }
+        [HttpPost("authenticate")]
+        public IActionResult Authenticate([FromBody] User userParam)
+        {
+            var user = _userservice.Authenticate(userParam.UserName, userParam.Password);
+
+            if (user == null)
+                return BadRequest(new { message = "Username or password is incorrect" });
+
+            return Ok(user);
+        }
 
         // GET: api/Users
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<User>>> Getusers()
         {
