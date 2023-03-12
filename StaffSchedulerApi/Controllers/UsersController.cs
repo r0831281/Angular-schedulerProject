@@ -18,9 +18,10 @@ namespace StaffSchedulerApi.Controllers
     {
         private readonly ScheduleContext _context;
         private IUserService _userservice;
-        public UsersController(ScheduleContext context)
+        public UsersController(ScheduleContext context, IUserService userService)
         {
             _context = context;
+            _userservice = userService;
         }
         [HttpPost("authenticate")]
         public IActionResult Authenticate([FromBody] User userParam)
@@ -45,7 +46,7 @@ namespace StaffSchedulerApi.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<User>> GetUser(int id)
         {
-            var user = await _context.users.Include(u => u.Role).FirstOrDefaultAsync(u => u.Id == id);
+            var user = await _context.users.FirstOrDefaultAsync(u => u.UserId == id);
 
             if (user == null)
             {
@@ -60,7 +61,7 @@ namespace StaffSchedulerApi.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutUser(int id, User user)
         {
-            if (id != user.Id)
+            if (id != user.UserId)
             {
                 return BadRequest();
             }
@@ -94,7 +95,7 @@ namespace StaffSchedulerApi.Controllers
             _context.users.Add(user);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetUser", new { id = user.Id }, user);
+            return CreatedAtAction("GetUser", new { id = user.UserId }, user);
         }
 
         // DELETE: api/Users/5
@@ -115,7 +116,7 @@ namespace StaffSchedulerApi.Controllers
 
         private bool UserExists(int id)
         {
-            return _context.users.Any(e => e.Id == id);
+            return _context.users.Any(e => e.UserId == id);
         }
     }
 }

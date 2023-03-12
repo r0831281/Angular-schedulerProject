@@ -8,6 +8,7 @@ using StaffSchedulerApi.Models;
 using StaffSchedulerApi.Services;
 using System.Configuration;
 using System.Text;
+using static StaffSchedulerApi.Services.DBinitializer;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,7 +18,9 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ScheduleContext>(options =>
-                options.UseSqlServer(connectionString));
+                options.UseSqlServer(connectionString)
+                );
+builder.Services.AddCors();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
@@ -38,7 +41,6 @@ c.AddSecurityRequirement(new OpenApiSecurityRequirement{
 var appSettingsSection = builder.Configuration.GetSection("AppSettings");
 
 builder.Services.Configure<AppSettings>(appSettingsSection);
-
 // configure jwt authentication
 var appSettings = appSettingsSection.Get<AppSettings>();
 var key = Encoding.ASCII.GetBytes(appSettings.Secret);
@@ -63,6 +65,12 @@ builder.Services.AddAuthentication(x =>
 // configure DI for application services
 builder.Services.AddScoped<IUserService, UserService>();
 
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("AdminOnly", policy => policy.RequireClaim("Role", "Admin"));
+}
+);
+
 
 var app = builder.Build();
 
@@ -78,6 +86,11 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 
+using (var scope = app.Services.CreateScope())
+{
+    var myContext = scope.ServiceProvider.GetRequiredService<ScheduleContext>();
+    DBInitializer.Initialize(myContext);
+}
 app.MapControllers();
 
 app.Run();

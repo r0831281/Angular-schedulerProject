@@ -24,7 +24,7 @@ namespace StaffSchedulerApi.Services
         }
         public User Authenticate(string username, string password)
         {
-            var user = _context.users.Include(u => u.Role).FirstOrDefault(u => u.UserName == username && u.Password == password);
+            var user = _context.users.Include(u => u.Role).SingleOrDefault(u => u.UserName == username && u.Password == password);
 
             // return null if user not found
             if (user == null)
@@ -37,9 +37,10 @@ namespace StaffSchedulerApi.Services
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                    new Claim("UserId", user.Id.ToString()),
-                    new Claim("Email", user.Email),
-                    new Claim("Username", user.UserName)
+                    new Claim("UserId", user.UserId.ToString()),
+                    new Claim("Username", user.UserName),
+                    new Claim("Role", user.Role.RoleName)
+
                 }),
                 Expires = DateTime.UtcNow.AddDays(7),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256)

@@ -10,17 +10,17 @@ namespace StaffSchedulerApi.Data
 
         }
 
-        public DbSet<User> users { get; set; }
         public DbSet<Role> roles { get; set; }
+        public DbSet<User> users { get; set; }
         public DbSet<AvailableDate> availableDates { get; set; }
         public DbSet<RequestedDate> requestedDate { get; set; }
         public DbSet<PlannedDate> plannedDates { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<User>().ToTable("users");
-
             modelBuilder.Entity<Role>().ToTable("roles");
+            modelBuilder.Entity<User>().ToTable("users");
+ 
             modelBuilder.Entity<AvailableDate>().ToTable("availableDates");
             modelBuilder.Entity<RequestedDate>().ToTable("requestedDates");
             modelBuilder.Entity<PlannedDate>().ToTable("plannedDates");

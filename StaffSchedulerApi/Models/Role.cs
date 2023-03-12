@@ -6,13 +6,9 @@ namespace StaffSchedulerApi.Models
     public class Role
     {
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int Id { get; set; }
+        public int RoleId { get; set; }
         [Required]
         public string RoleName { get; set; }
-
-        public ICollection<User> Users { get; set; }
-        
-
-        
+       
     }
 }

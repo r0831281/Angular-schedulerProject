@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -13,49 +12,47 @@ namespace StaffSchedulerApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
-    public class RolesController : ControllerBase
+    public class AvailableDatesController : ControllerBase
     {
         private readonly ScheduleContext _context;
 
-        public RolesController(ScheduleContext context)
+        public AvailableDatesController(ScheduleContext context)
         {
             _context = context;
         }
 
-        // GET: api/Roles
-
+        // GET: api/AvailableDates
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Role>>> Getroles()
+        public async Task<ActionResult<IEnumerable<AvailableDate>>> GetavailableDates()
         {
-            return await _context.roles.ToListAsync();
+            return await _context.availableDates.ToListAsync();
         }
 
-        // GET: api/Roles/5
+        // GET: api/AvailableDates/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Role>> GetRole(int id)
+        public async Task<ActionResult<AvailableDate>> GetAvailableDate(int id)
         {
-            var role = await _context.roles.FindAsync(id);
+            var availableDate = await _context.availableDates.FindAsync(id);
 
-            if (role == null)
+            if (availableDate == null)
             {
                 return NotFound();
             }
 
-            return role;
+            return availableDate;
         }
 
-        // PUT: api/Roles/5
+        // PUT: api/AvailableDates/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutRole(int id, Role role)
+        public async Task<IActionResult> PutAvailableDate(int id, AvailableDate availableDate)
         {
-            if (id != role.RoleId)
+            if (id != availableDate.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(role).State = EntityState.Modified;
+            _context.Entry(availableDate).State = EntityState.Modified;
 
             try
             {
@@ -63,7 +60,7 @@ namespace StaffSchedulerApi.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!RoleExists(id))
+                if (!AvailableDateExists(id))
                 {
                     return NotFound();
                 }
@@ -76,36 +73,36 @@ namespace StaffSchedulerApi.Controllers
             return NoContent();
         }
 
-        // POST: api/Roles
+        // POST: api/AvailableDates
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Role>> PostRole(Role role)
+        public async Task<ActionResult<AvailableDate>> PostAvailableDate(AvailableDate availableDate)
         {
-            _context.roles.Add(role);
+            _context.availableDates.Add(availableDate);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetRole", new { id = role.RoleId }, role);
+            return CreatedAtAction("GetAvailableDate", new { id = availableDate.Id }, availableDate);
         }
 
-        // DELETE: api/Roles/5
+        // DELETE: api/AvailableDates/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteRole(int id)
+        public async Task<IActionResult> DeleteAvailableDate(int id)
         {
-            var role = await _context.roles.FindAsync(id);
-            if (role == null)
+            var availableDate = await _context.availableDates.FindAsync(id);
+            if (availableDate == null)
             {
                 return NotFound();
             }
 
-            _context.roles.Remove(role);
+            _context.availableDates.Remove(availableDate);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool RoleExists(int id)
+        private bool AvailableDateExists(int id)
         {
-            return _context.roles.Any(e => e.RoleId == id);
+            return _context.availableDates.Any(e => e.Id == id);
         }
     }
 }
