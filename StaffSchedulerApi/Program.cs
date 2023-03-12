@@ -16,9 +16,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+var connectionString = builder.Configuration.GetConnectionString("sqlite");
 builder.Services.AddDbContext<ScheduleContext>(options =>
-                options.UseSqlServer(connectionString)
+                options.UseSqlite(connectionString)
                 );
 builder.Services.AddCors();
 

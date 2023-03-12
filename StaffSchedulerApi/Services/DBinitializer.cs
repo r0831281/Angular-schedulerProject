@@ -19,7 +19,7 @@ namespace StaffSchedulerApi.Services
                 context.Database.EnsureCreated();
 
                 // Look for any products.
-                if (context.roles.Any())
+                if (context.Roles.Any())
                 {
                     return;   // DB has been seeded
                 }

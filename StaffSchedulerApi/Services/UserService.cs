@@ -24,7 +24,7 @@ namespace StaffSchedulerApi.Services
         }
         public User Authenticate(string username, string password)
         {
-            var user = _context.users.Include(u => u.Role).SingleOrDefault(u => u.UserName == username && u.Password == password);
+            var user = _context.Users.Include(u => u.Role).SingleOrDefault(u => u.UserName == username && u.Password == password);
 
             // return null if user not found
             if (user == null)

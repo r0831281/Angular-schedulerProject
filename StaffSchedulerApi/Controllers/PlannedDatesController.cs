@@ -25,14 +25,14 @@ namespace StaffSchedulerApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<PlannedDate>>> GetplannedDates()
         {
-            return await _context.plannedDates.ToListAsync();
+            return await _context.PlannedDates.ToListAsync();
         }
 
         // GET: api/PlannedDates/5
         [HttpGet("{id}")]
         public async Task<ActionResult<PlannedDate>> GetPlannedDate(int id)
         {
-            var plannedDate = await _context.plannedDates.FindAsync(id);
+            var plannedDate = await _context.PlannedDates.FindAsync(id);
 
             if (plannedDate == null)
             {
@@ -78,7 +78,7 @@ namespace StaffSchedulerApi.Controllers
         [HttpPost]
         public async Task<ActionResult<PlannedDate>> PostPlannedDate(PlannedDate plannedDate)
         {
-            _context.plannedDates.Add(plannedDate);
+            _context.PlannedDates.Add(plannedDate);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetPlannedDate", new { id = plannedDate.Id }, plannedDate);
@@ -88,13 +88,13 @@ namespace StaffSchedulerApi.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletePlannedDate(int id)
         {
-            var plannedDate = await _context.plannedDates.FindAsync(id);
+            var plannedDate = await _context.PlannedDates.FindAsync(id);
             if (plannedDate == null)
             {
                 return NotFound();
             }
 
-            _context.plannedDates.Remove(plannedDate);
+            _context.PlannedDates.Remove(plannedDate);
             await _context.SaveChangesAsync();
 
             return NoContent();
@@ -102,7 +102,7 @@ namespace StaffSchedulerApi.Controllers
 
         private bool PlannedDateExists(int id)
         {
-            return _context.plannedDates.Any(e => e.Id == id);
+            return _context.PlannedDates.Any(e => e.Id == id);
         }
     }
 }

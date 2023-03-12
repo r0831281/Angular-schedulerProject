@@ -25,14 +25,14 @@ namespace StaffSchedulerApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<AvailableDate>>> GetavailableDates()
         {
-            return await _context.availableDates.ToListAsync();
+            return await _context.AvailableDates.ToListAsync();
         }
 
         // GET: api/AvailableDates/5
         [HttpGet("{id}")]
         public async Task<ActionResult<AvailableDate>> GetAvailableDate(int id)
         {
-            var availableDate = await _context.availableDates.FindAsync(id);
+            var availableDate = await _context.AvailableDates.FindAsync(id);
 
             if (availableDate == null)
             {
@@ -78,7 +78,7 @@ namespace StaffSchedulerApi.Controllers
         [HttpPost]
         public async Task<ActionResult<AvailableDate>> PostAvailableDate(AvailableDate availableDate)
         {
-            _context.availableDates.Add(availableDate);
+            _context.AvailableDates.Add(availableDate);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetAvailableDate", new { id = availableDate.Id }, availableDate);
@@ -88,13 +88,13 @@ namespace StaffSchedulerApi.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAvailableDate(int id)
         {
-            var availableDate = await _context.availableDates.FindAsync(id);
+            var availableDate = await _context.AvailableDates.FindAsync(id);
             if (availableDate == null)
             {
                 return NotFound();
             }
 
-            _context.availableDates.Remove(availableDate);
+            _context.AvailableDates.Remove(availableDate);
             await _context.SaveChangesAsync();
 
             return NoContent();
@@ -102,7 +102,7 @@ namespace StaffSchedulerApi.Controllers
 
         private bool AvailableDateExists(int id)
         {
-            return _context.availableDates.Any(e => e.Id == id);
+            return _context.AvailableDates.Any(e => e.Id == id);
         }
     }
 }

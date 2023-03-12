@@ -28,14 +28,14 @@ namespace StaffSchedulerApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Role>>> Getroles()
         {
-            return await _context.roles.ToListAsync();
+            return await _context.Roles.ToListAsync();
         }
 
         // GET: api/Roles/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Role>> GetRole(int id)
         {
-            var role = await _context.roles.FindAsync(id);
+            var role = await _context.Roles.FindAsync(id);
 
             if (role == null)
             {
@@ -81,7 +81,7 @@ namespace StaffSchedulerApi.Controllers
         [HttpPost]
         public async Task<ActionResult<Role>> PostRole(Role role)
         {
-            _context.roles.Add(role);
+            _context.Roles.Add(role);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetRole", new { id = role.RoleId }, role);
@@ -91,13 +91,13 @@ namespace StaffSchedulerApi.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteRole(int id)
         {
-            var role = await _context.roles.FindAsync(id);
+            var role = await _context.Roles.FindAsync(id);
             if (role == null)
             {
                 return NotFound();
             }
 
-            _context.roles.Remove(role);
+            _context.Roles.Remove(role);
             await _context.SaveChangesAsync();
 
             return NoContent();
@@ -105,7 +105,7 @@ namespace StaffSchedulerApi.Controllers
 
         private bool RoleExists(int id)
         {
-            return _context.roles.Any(e => e.RoleId == id);
+            return _context.Roles.Any(e => e.RoleId == id);
         }
     }
 }
